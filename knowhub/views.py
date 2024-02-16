@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from knowhub.models import Category
 
 
 posts = [
@@ -19,7 +20,7 @@ posts = [
 
 def home(request):
     context = {
-        "posts": posts
+        "category": Category.objects.all()
     }
     return render(request, "knowhub/home.html", context)
 
