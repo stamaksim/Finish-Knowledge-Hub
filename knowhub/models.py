@@ -2,12 +2,17 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
+from django.urls import reverse
 
 class User(AbstractUser):
     class Meta:
         ordering = ("username",)
     def __str__(self):
-        return f"{self.username}: ({self.first_name} {self.last_name})"
+        return f"{self.first_name} {self.last_name}"
+
+    def save(self, *args, **kwargs):
+        print("User model is being saved...")
+        super().save(*args, **kwargs)
 
 
 
@@ -31,7 +36,10 @@ class Articles(models.Model):
     creation_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f"{self.category}: ({self.name}"
+        return f"{self.category}: ({self.name}{self.description})"
+
+    def get_absolute_url(self):
+        return reverse("article-detail", kwargs={"pk" : self.pk})
 
 
 class Services(models.Model):

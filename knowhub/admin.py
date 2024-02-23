@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from knowhub.models import User, Category, Services
+from knowhub.models import User, Category, Services, Articles
 
 @admin.register(Services)
 class ServicesAdmin(admin.ModelAdmin):
@@ -28,3 +28,8 @@ class UsersAdmin(UserAdmin):
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ["name", "description"]
+
+
+@admin.register(Articles)
+class ArticlesAdmin(admin.ModelAdmin):
+    list_display = ["name", "category", "description"]
