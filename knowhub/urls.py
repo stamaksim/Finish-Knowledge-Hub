@@ -4,7 +4,10 @@ from .views import (
     ArticleDetailView,
     ArticleCreateView,
     ArticleUpdateView,
-    ArticleDeleteView
+    ArticleDeleteView,
+    CategoryDetailView,
+    CategoryListView,
+
 )
 from knowhub import views
 
@@ -15,5 +18,6 @@ urlpatterns = [
     path("article/new/", ArticleCreateView.as_view(), name="article-create"),
     path("article/<int:pk>/update/", ArticleUpdateView.as_view(), name="article-update"),
     path("article/<int:pk>/delete/", ArticleDeleteView.as_view(), name="article-delete"),
-
+    path("categories/",CategoryListView.as_view(),name="category-list"),
+    path("categories/<int:pk>/", CategoryDetailView.as_view(), name="category-detail")
 ]

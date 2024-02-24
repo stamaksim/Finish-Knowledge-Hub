@@ -1,0 +1,45 @@
+{% extends "knowhub/base.html" %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Create New Article</h5>
+          <p class="card-text">Click the button below to create a new article in this category.</p>
+          <a href="{% url 'article-create' %}" class="btn btn-primary">Create Article</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="category-info">
+        <h1>{{ category.name }}</h1>
+        <p>Description: {{ category.description }}</p>
+      </div>
+      <div class="article-list">
+        <ul class="list-group">
+          {% for article in article_list %}
+            <li class="list-group-item">
+              <article class="media">
+                <img class="rounded-circle article-img" src="{{ article.user.profile.image.url }}" alt="">
+                <div class="media-body">
+                  <div class="article-metadata">
+                    <a class="mr-2" href="#">{{ article.user }}</a>
+                    <small class="text-muted">{{ article.creation_date|date:"F d, Y" }}</small>
+                  </div>
+                  <h2><a class="article-title" href="{% url "article-detail" article.id %}">{{ article.name }}</a></h2>
+                  <p class="article-content">{{ article.description }}</p>
+                </div>
+              </article>
+            </li>
+          {% empty %}
+            <li class="list-group-item">No articles found in this category.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+
+
