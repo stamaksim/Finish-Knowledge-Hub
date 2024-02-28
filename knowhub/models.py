@@ -30,8 +30,8 @@ class Category(models.Model):
 
 class Articles(models.Model):
     name = models.CharField(max_length=65)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="categories_articles")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="articles_users")
     description = models.CharField(max_length=255)
     creation_date = models.DateTimeField(default=timezone.now)
 
@@ -56,5 +56,12 @@ class Services(models.Model):
 class Comment(models.Model):
     text = models.TextField(max_length=300)
     date = models.DateTimeField(default=timezone.now)
-    articles = models.ForeignKey(Articles, on_delete=models.CASCADE)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    article = models.ForeignKey(Articles, on_delete=models.CASCADE, related_name="comments")
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comments_authors")
+
+
+    class Meta:
+        ordering = ["-date"]
+
+    def __str__(self):
+        return self.text

@@ -1,0 +1,16 @@
+{% extends "knowhub/base.html" %}
+
+{% block content %}
+  <p>{{ comment.text }}</p>
+  <p>Author: {{ comment.author }}</p>
+  <p>Date: {{ comment.date }}</p>
+
+  {% if request.user == comment.author %}
+    <a href="{% url 'comment-update' comment.pk %}">Update comment</a>
+    <form action="{% url 'comment-delete' comment.pk %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <button type="submit">Delete comment</button>
+    </form>
+  {% endif %}
+{% endblock content %}
