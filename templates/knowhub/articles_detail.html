@@ -1,4 +1,4 @@
-{% extends "knowhub/base.html" %}
+{% extends "base.html" %}
 
 {% block content %}
   <article class="media content-section">
@@ -20,6 +20,7 @@
   </article>
 
   <!-- comment view -->
+  <!-- comment view -->
   <div class="comments-section">
     <h3>Comments</h3>
     {% for comment in object.comments.all %}
@@ -28,12 +29,10 @@
         <p>Author: {{ comment.author }}</p>
         <p>Date: {{ comment.date }}</p>
         {% if comment.author == request.user %}
+          <p>Are you sure you want to delete this comment?</p>
           <a href="{% url 'comment-update' comment.pk %}">Edit</a>
-          <form action="{% url 'comment-delete' comment.pk %}" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="next" value="{{ request.path }}">
-            <button type="submit">Delete</button>
-          </form>
+          <a href="{% url 'comment-delete' comment.pk %}"
+             onclick="return confirm('Are you sure you want to delete this comment?')">Delete</a>
         {% endif %}
       </div>
     {% empty %}

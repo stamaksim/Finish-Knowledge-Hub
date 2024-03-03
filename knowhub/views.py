@@ -5,7 +5,7 @@ from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.views.generic.edit import FormMixin
 from knowhub.forms import CommentForm
-from knowhub.models import Articles, Category, Comment
+from knowhub.models import Articles, Category, Comment, Services
 from django.views.generic import (
     ListView,
     DetailView,
@@ -134,7 +134,9 @@ class CommentUpdateView(LoginRequiredMixin, UpdateView):
     model = Comment
     fields = ["text"]
     template_name = "knowhub/comment_update.html"
-    success_url = "/"
+
+    def get_success_url(self):
+        return reverse_lazy("article-detail", kwargs={"pk": self.object.article.pk})
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -143,7 +145,6 @@ class CommentUpdateView(LoginRequiredMixin, UpdateView):
 
 class CommentDeleteView(LoginRequiredMixin, DeleteView):
     model = Comment
-    success_url = reverse_lazy("c")
     template_name = "knowhub/comment_confirm_delete.html"
 
     def get_success_url(self):
@@ -153,6 +154,62 @@ class CommentDeleteView(LoginRequiredMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         context['comment'] = self.object
         return context
+
+
+class ServicesListView(LoginRequiredMixin, ListView):
+    model = Services
+    context_object_name = "services_list"
+    template_name = "knowhub/services_list.html"
+
+    def get_queryset(self):
+        return Services.objects.all()
+
+
+class ServicesDetailView(LoginRequiredMixin, DetailView):
+    model = Services
+    template_name = "knowhub/services_detail.html"
+
+
+
+class ServicesCreateView(LoginRequiredMixin, CreateView):
+    model = Services
+    template_name = "knowhub/services_create.html"
+    fields = ["name", "description", "price"]
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("services-detail", kwargs={"pk": self.object.pk})
+
+class ServicesUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Services
+    fields = ["category", "description", "name"]
+    template_name = "knowhub/services_update.html"
+    success_url = reverse_lazy("services-list")
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        serv = self.get_object()
+        if self.request.user == serv.owner:
+            return True
+        return False
+
+
+class ServicesDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Services
+    success_url = "/"
+
+    def test_func(self):
+        serw = self.get_object()
+        if self.request.user == serw.owner:
+            return True
+        return False
+
 
 
 def about(request):

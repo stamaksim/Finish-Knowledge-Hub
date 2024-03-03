@@ -11,7 +11,6 @@ class User(AbstractUser):
         return f"{self.first_name} {self.last_name}"
 
     def save(self, *args, **kwargs):
-        print("User model is being saved...")
         super().save(*args, **kwargs)
 
 
@@ -47,10 +46,10 @@ class Services(models.Model):
     description = models.CharField(max_length=255)
     category = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=5, decimal_places=2, blank=True)
-    user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="services")
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="services", )
 
     def __str__(self):
-        return f"{self.name}: ({self.description}{self.category}{self.price})"
+        return f"{self.name}: ({self.description}{self.category}{self.price}{self.owner})"
 
 
 class Comment(models.Model):
