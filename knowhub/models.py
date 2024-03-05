@@ -32,6 +32,7 @@ class Articles(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="categories_articles")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="articles_users")
     description = models.CharField(max_length=255)
+    text = models.TextField()
     creation_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
@@ -46,6 +47,7 @@ class Services(models.Model):
     description = models.CharField(max_length=255)
     category = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=5, decimal_places=2, blank=True)
+    content = models.TextField()
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="services", )
 
     def __str__(self):

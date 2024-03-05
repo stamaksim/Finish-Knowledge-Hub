@@ -1,4 +1,4 @@
-{% extends "knowhub/base.html" %}
+{% extends "base.html" %}
 
 {% block content %}
   <div class="row">
@@ -24,7 +24,7 @@
                 <img class="rounded-circle article-img" src="{{ article.user.profile.image.url }}" alt="">
                 <div class="media-body">
                   <div class="article-metadata">
-                    <a class="mr-2" href="#">{{ article.user }}</a>
+                    <a class="mr-2" href="#">{{ article.user.username }}</a>
                     <small class="text-muted">{{ article.creation_date|date:"F d, Y" }}</small>
                   </div>
                   <h2><a class="article-title" href="{% url "article-detail" article.id %}">{{ article.name }}</a></h2>
@@ -37,9 +37,28 @@
           {% endfor %}
         </ul>
       </div>
+      <!-- Відображення пагінації -->
+      <div class="pagination">
+          <span class="step-links">
+              {% if article_list.has_previous %}
+                  <a href="?page=1">&laquo; First Page</a>
+                  <a href="?page={{ article_list.previous_page_number }}">Previous</a>
+              {% endif %}
+
+              <span class="current">
+                  Page {{ article_list.number }} з {{ article_list.paginator.num_pages }}.
+              </span>
+
+              {% if article_list.has_next %}
+                  <a href="?page={{ article_list.next_page_number }}">Next</a>
+                  <a href="?page={{ article_list.paginator.num_pages }}">Last &raquo;</a>
+              {% endif %}
+          </span>
+      </div>
     </div>
   </div>
 {% endblock %}
+
 
 
 

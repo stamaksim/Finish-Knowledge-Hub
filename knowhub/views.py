@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -41,9 +42,10 @@ class ArticleDetailView(LoginRequiredMixin, DetailView, FormMixin):
 
 
 
+
 class ArticleCreateView(LoginRequiredMixin, CreateView):
     model = Articles
-    fields = ["name", "description", "category"]
+    fields = ["name", "description", "category", "text"]
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -94,11 +96,17 @@ class CategoryDetailView(LoginRequiredMixin, DetailView):
     model = Category
     template_name = "knowhub/category_detail.html"
 
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         category = self.object
         articles = Articles.objects.filter(category=category)
-        context["article_list"] = articles
+        paginator = Paginator(articles, 3)
+
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        context["article_list"] = page_obj
         return context
 
 class CommentCreateView(CreateView):
@@ -174,7 +182,7 @@ class ServicesDetailView(LoginRequiredMixin, DetailView):
 class ServicesCreateView(LoginRequiredMixin, CreateView):
     model = Services
     template_name = "knowhub/services_create.html"
-    fields = ["name", "description", "price"]
+    fields = ["name", "description", "price", "content"]
 
     def form_valid(self, form):
         form.instance.owner = self.request.user

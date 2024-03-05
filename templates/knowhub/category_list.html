@@ -1,4 +1,4 @@
-{% extends "knowhub/base.html" %}
+{% extends "base.html" %}
 
 {% block content %}
   {% if category_list %}
@@ -6,7 +6,7 @@
       {% for category in category_list %}
         <a href="{% url 'category-detail' category.id %}" class="list-group-item list-group-item-action">
           <h5 class="mb-1">{{ category.name }}</h5>
-          <small>ID: {{ category.id }}</small>
+          <br>
         </a>
       {% endfor %}
     </div>

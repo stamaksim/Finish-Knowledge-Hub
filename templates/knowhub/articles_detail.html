@@ -16,10 +16,11 @@
       </div>
       <h2 class="article-title">{{ object.name }}</h2>
       <p class="article-content">{{ object.description }}</p>
+      <p> {{ articles.text }}</p>
+
     </div>
   </article>
 
-  <!-- comment view -->
   <!-- comment view -->
   <div class="comments-section">
     <h3>Comments</h3>
@@ -42,4 +43,5 @@
 
   {% include "knowhub/comment.html" %}
 {% endblock content %}
+
 
