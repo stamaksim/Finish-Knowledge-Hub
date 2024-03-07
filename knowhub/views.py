@@ -5,21 +5,19 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.views.generic.edit import FormMixin
-from knowhub.forms import CommentForm
+from knowhub.forms import CommentForm, ArticlesSearchForm, ServiceSearchForm
 from knowhub.models import Articles, Category, Comment, Services
 from django.views.generic import (
     ListView,
     DetailView,
     CreateView,
     UpdateView,
-    DeleteView
+    DeleteView,
 )
 
 
 def home(request):
-    context = {
-        "articles": Articles.objects.all()
-    }
+    context = {"articles": Articles.objects.all()}
     return render(request, "knowhub/home.html", context)
 
 
@@ -39,8 +37,6 @@ class ArticleDetailView(LoginRequiredMixin, DetailView, FormMixin):
         context = super().get_context_data(**kwargs)
         context["comment_form"] = CommentForm()
         return context
-
-
 
 
 class ArticleCreateView(LoginRequiredMixin, CreateView):
@@ -96,22 +92,26 @@ class CategoryDetailView(LoginRequiredMixin, DetailView):
     model = Category
     template_name = "knowhub/category_detail.html"
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        category = self.object
+        category = self.get_object()
         articles = Articles.objects.filter(category=category)
+        if self.request.GET.get("title"):
+            articles = articles.filter(name__icontains=self.request.GET.get("title"))
         paginator = Paginator(articles, 3)
 
-        page_number = self.request.GET.get('page')
+        page_number = self.request.GET.get("page")
         page_obj = paginator.get_page(page_number)
 
         context["article_list"] = page_obj
+        title = self.request.GET.get("title", "")
+        context["search_form"] = ArticlesSearchForm(initial={"title": title})
         return context
+
 
 class CommentCreateView(CreateView):
     model = Comment
-    fields = ("text", )
+    fields = ("text",)
     template_name = "knowhub/comment.html"
 
     def get_success_url(self):
@@ -160,7 +160,7 @@ class CommentDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['comment'] = self.object
+        context["comment"] = self.object
         return context
 
 
@@ -168,15 +168,25 @@ class ServicesListView(LoginRequiredMixin, ListView):
     model = Services
     context_object_name = "services_list"
     template_name = "knowhub/services_list.html"
+    paginate_by = 5
 
     def get_queryset(self):
+        form = ServiceSearchForm(self.request.GET)
+        if form.is_valid():
+            return Services.objects.filter(name__icontains=form.cleaned_data["title"])
+
         return Services.objects.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ServicesListView, self).get_context_data(**kwargs)
+        title = self.request.GET.get("title", "")
+        context["search_form"] = ServiceSearchForm(initial={"title": title})
+        return context
 
 
 class ServicesDetailView(LoginRequiredMixin, DetailView):
     model = Services
     template_name = "knowhub/services_detail.html"
-
 
 
 class ServicesCreateView(LoginRequiredMixin, CreateView):
@@ -190,6 +200,7 @@ class ServicesCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse("services-detail", kwargs={"pk": self.object.pk})
+
 
 class ServicesUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Services
@@ -217,7 +228,6 @@ class ServicesDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == serw.owner:
             return True
         return False
-
 
 
 def about(request):
