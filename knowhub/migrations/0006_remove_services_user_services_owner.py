@@ -9,18 +9,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('knowhub', '0005_rename_articles_comment_article'),
+        ("knowhub", "0005_rename_articles_comment_article"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='services',
-            name='user',
+            model_name="services",
+            name="user",
         ),
         migrations.AddField(
-            model_name='services',
-            name='owner',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='services', to=settings.AUTH_USER_MODEL),
+            model_name="services",
+            name="owner",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="services",
+                to=settings.AUTH_USER_MODEL,
+            ),
             preserve_default=False,
         ),
     ]

@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('knowhub', '0001_initial'),
+        ("knowhub", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='category',
-            options={'ordering': ('creation',)},
+            name="category",
+            options={"ordering": ("creation",)},
         ),
     ]

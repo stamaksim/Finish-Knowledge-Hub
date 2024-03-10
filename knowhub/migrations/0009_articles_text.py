@@ -7,14 +7,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('knowhub', '0008_alter_services_owner'),
+        ("knowhub", "0008_alter_services_owner"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='articles',
-            name='text',
-            field=models.TextField(default=datetime.datetime(2024, 3, 5, 12, 59, 11, 456005, tzinfo=datetime.timezone.utc)),
+            model_name="articles",
+            name="text",
+            field=models.TextField(
+                default=datetime.datetime(
+                    2024, 3, 5, 12, 59, 11, 456005, tzinfo=datetime.timezone.utc
+                )
+            ),
             preserve_default=False,
         ),
     ]

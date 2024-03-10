@@ -21,7 +21,7 @@ def home(request):
     return render(request, "knowhub/home.html", context)
 
 
-class ArticleListView(LoginRequiredMixin, ListView):
+class ArticleListView(ListView):
     model = Articles
     template_name = "knowhub/home.html"
     context_object_name = "articles"

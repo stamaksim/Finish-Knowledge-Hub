@@ -8,13 +8,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('knowhub', '0007_alter_services_owner'),
+        ("knowhub", "0007_alter_services_owner"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='services',
-            name='owner',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='services', to=settings.AUTH_USER_MODEL),
+            model_name="services",
+            name="owner",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="services",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]
