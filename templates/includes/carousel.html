@@ -1,0 +1,53 @@
+{% load static %}
+<div id="carouselExampleIndicators"
+     data-bs-interval="4000" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+            aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+            aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+            aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div class="content">
+        <h1>Finnish<br>Immigration Service</h1>
+        <p>Here you can find information for immigrants and asylum seekers </p>
+        <a href="/pages/immigrants.html" class="btn btn-primary">Explore</a>
+      </div>
+      <div class="overlay"></div>
+      <img src="{% static "images/For immigrants.jpg" %}" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <div class="content-2">
+        <h1>KELA</h1>
+        <p>Get information about Kela or request a consultation </p>
+        <a href="{% url 'category-detail' category_slug='category1' %}">
+          <button type="button" class="btn btn-primary">Explore</button>
+        </a>
+      </div>
+      <div class="overlay-2"></div>
+      <img src="{% static "images/Kela.jpg" %}" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <div class="content-3">
+        <h1>TE <br>Toimisto</h1>
+        <p>Here you can find information for immigrants and asylum seekers </p>
+        <a href="{% url 'category-detail' category_slug='category2'%}">
+          <button type="button" class="btn btn-primary">Explore</button>
+        </a>
+      </div>
+      <div class="overlay"></div>
+      <img src="{% static "images/TE.jpeg" %}" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>

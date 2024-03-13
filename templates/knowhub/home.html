@@ -1,17 +1,22 @@
 {% extends "base.html" %}
 
-{% block content %}
 
-    <article class="media content-section">
+{% block carousel %}
+    {% include "includes/carousel.html" %}
+{% endblock carousel %}
 
-      <div class="media-body">
-        <div class="article-metadata">
-          <a class="mr-2" href="#">{{ article.user }}</a>
-          <small class="text-muted">{{ article.creation_date|date:"F d, Y" }}</small>
-        </div>
-
-        <p class="article-content">{{ post.content }}</p>
-      </div>
-    </article>
-
-{% endblock content %}
+{#{% block content %}#}
+{##}
+{#    <article class="media content-section">#}
+{##}
+{#      <div class="media-body">#}
+{#        <div class="article-metadata">#}
+{#          <a class="mr-2" href="#">{{ article.user }}</a>#}
+{#          <small class="text-muted">{{ article.creation_date|date:"F d, Y" }}</small>#}
+{#        </div>#}
+{##}
+{#        <p class="article-content">{{ post.content }}</p>#}
+{#      </div>#}
+{#    </article>#}
+{##}
+{#{% endblock content %}#}

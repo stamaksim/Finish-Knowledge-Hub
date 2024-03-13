@@ -1,9 +1,9 @@
 from django.core.paginator import Paginator
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
-from django.views import generic
+from django.views import generic, View
 from django.views.generic.edit import FormMixin
 from knowhub.forms import CommentForm, ArticlesSearchForm, ServiceSearchForm
 from knowhub.models import Articles, Category, Comment, Services
@@ -91,6 +91,8 @@ class CategoryListView(LoginRequiredMixin, generic.ListView):
 class CategoryDetailView(LoginRequiredMixin, DetailView):
     model = Category
     template_name = "knowhub/category_detail.html"
+    slug_url_kwarg = 'category_slug'
+    slug_field = 'slug'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -135,6 +137,7 @@ class CommentDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["comment"] = self.object
+        context["author"] = self.object.author
         return context
 
 
@@ -189,6 +192,8 @@ class ServicesDetailView(LoginRequiredMixin, DetailView):
     template_name = "knowhub/services_detail.html"
 
 
+
+
 class ServicesCreateView(LoginRequiredMixin, CreateView):
     model = Services
     template_name = "knowhub/services_create.html"
@@ -228,6 +233,40 @@ class ServicesDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == serw.owner:
             return True
         return False
+
+
+class SearchView(View):
+    def get(self, request):
+        search_type = request.GET.get('search_type')
+        search_query = request.GET.get('query')
+
+        if search_query:  # Використовуйте truthiness для перевірки на пустий рядок
+            articles = Articles.objects.filter(name__icontains=search_query)
+            services = Services.objects.filter(name__icontains=search_query)
+
+            if search_type == 'articles':
+                results = articles
+            elif search_type == 'services':
+                results = services
+            else:
+                results = list(articles) + list(services)  # Об'єднати результати пошуку
+        else:
+            # Вивести всі статті та послуги, якщо пошуковий запит відсутній
+            articles = Articles.objects.all()
+            services = Services.objects.all()
+            results = list(articles) + list(services)
+
+        context = {
+            'results': results,
+            'search_query': search_query,
+            'search_type': search_type,
+        }
+        return render(request, 'knowhub/search_results.html', context)
+
+
+
+
+
 
 
 def about(request):

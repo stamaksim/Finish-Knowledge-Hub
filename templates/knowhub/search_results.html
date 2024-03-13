@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    <p>Showing results for: {{ search_query }}</p>
+
+    {% if results %}
+        {% if search_type == 'articles' %}
+            <h2>Articles</h2>
+            <ul>
+                {% for article in results %}
+                    <li><a href="{% url 'article-detail-slug' slug=article.slug %}">{{ article.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% elif search_type == 'services' %}
+            <h2>Services</h2>
+          <a href="#"></a>
+            <ul>
+                {% for service in results %}
+                    <li>{{ service.name }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h2>All Results</h2>
+            <ul>
+                {% for result in results %}
+                    <li>{{ result.name }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% else %}
+        <p>No search results found.</p>
+    {% endif %}
+</body>
+</html>
+
+

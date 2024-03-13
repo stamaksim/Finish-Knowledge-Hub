@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
+from django.utils.text import slugify
 
 
 class User(AbstractUser):
@@ -18,11 +19,18 @@ class User(AbstractUser):
 
 class Category(models.Model):
     name = models.CharField(max_length=255, verbose_name="category name")
+    slug = models.SlugField(max_length=100, unique=True)
     description = models.CharField(max_length=255)
     creation = models.DateTimeField(default=timezone.now)
 
     class Meta:
         ordering = ("creation",)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.name}"
@@ -46,7 +54,7 @@ class Articles(models.Model):
         return f"{self.category}: ({self.name}{self.description})"
 
     def get_absolute_url(self):
-        return reverse("article-detail", kwargs={"pk": self.pk})
+        return reverse("article-detail-slug", kwargs={"pk": self.pk})
 
 
 class Services(models.Model):

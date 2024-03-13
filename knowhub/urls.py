@@ -16,6 +16,7 @@ from .views import (
     ServicesDetailView,
     ServicesUpdateView,
     ServicesDeleteView,
+    SearchView,
 )
 from knowhub import views
 
@@ -35,6 +36,7 @@ urlpatterns = [
     ),
     path("categories/", CategoryListView.as_view(), name="category-list"),
     path("categories/<int:pk>/", CategoryDetailView.as_view(), name="category-detail"),
+    path('categories/<slug:category_slug>/', CategoryDetailView.as_view(), name='category-detail'),
     path("comment/<int:pk>/update", CommentUpdateView.as_view(), name="comment-update"),
     path("comment/<int:pk>/delete", CommentDeleteView.as_view(), name="comment-delete"),
     path("services/", ServicesListView.as_view(), name="services-list"),
@@ -50,4 +52,6 @@ urlpatterns = [
         ServicesDeleteView.as_view(),
         name="services-delete",
     ),
+    path("search/", SearchView.as_view(), name="search-results"),
+    path('article/<slug:slug>/', ArticleDetailView.as_view(), name="article-detail-slug"),
 ]

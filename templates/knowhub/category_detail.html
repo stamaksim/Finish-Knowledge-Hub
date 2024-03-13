@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load crispy_forms_filters %}
+
 {% block content %}
   <div class="row">
     <div class="col-md-4">
@@ -8,13 +10,18 @@
           <h5 class="card-title">Create New Article</h5>
           <p class="card-text">Click the button below to create a new article in this category.</p>
           <a href="{% url 'article-create' %}" class="btn btn-primary">Create Article</a>
+
         </div>
       </div>
     </div>
     <div class="col-md-8">
       <div class="category-info">
+        <form method="get" action="" class="form-inline">
+          {{ search_form|crispy }}
+          <button class="btn btn-secondary" type="submit">🔎</button>
+        </form>
         <h1>{{ category.name }}</h1>
-        <p>Description: {{ category.description }}</p>
+        <p><b>{{ category.description }}</b></p>
       </div>
       <div class="article-list">
         <ul class="list-group">
@@ -41,18 +48,18 @@
       <div class="pagination">
           <span class="step-links">
               {% if article_list.has_previous %}
-                  <a href="?page=1">&laquo; First Page</a>
-                  <a href="?page={{ article_list.previous_page_number }}">Previous</a>
+                <a href="?page=1">&laquo; First Page</a>
+                <a href="?page={{ article_list.previous_page_number }}">Previous</a>
               {% endif %}
 
-              <span class="current">
+            <span class="current">
                   Page {{ article_list.number }} з {{ article_list.paginator.num_pages }}.
               </span>
 
-              {% if article_list.has_next %}
-                  <a href="?page={{ article_list.next_page_number }}">Next</a>
-                  <a href="?page={{ article_list.paginator.num_pages }}">Last &raquo;</a>
-              {% endif %}
+            {% if article_list.has_next %}
+              <a href="?page={{ article_list.next_page_number }}">Next</a>
+              <a href="?page={{ article_list.paginator.num_pages }}">Last &raquo;</a>
+            {% endif %}
           </span>
       </div>
     </div>
