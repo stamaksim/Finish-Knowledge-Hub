@@ -5,16 +5,23 @@
       <a href="{% url "knowhub-home" %}">
         <img src={% static "icons/Knowhub.svg" %} alt="Knowhub" class="logo">
       </a>
-      <!--               <button onclick="toggleMiniBar()">Categories</button> --> <!-- если поменять на при нажатии -->
+
       <button id="categories-button">Categories</button>
       <div class="search-container">
         <form action="{% url 'search-results' %}"method="GET">
           <input type="text" placeholder="Search" name="query">
         </form>
       </div>
+    {% if not is_about_page %}
       <li class="nav-menu__item"><a href="{% url 'knowhub-about' %}">About</a></li>
+    {% endif %}
       {% if user.is_authenticated %}
-      <li class="nav-menu__item"><a href="{% url 'login' %}">Logout</a></li>
+       <li class="nav-menu__item">
+        <form action="{% url 'logout' %}" method="post">
+          {% csrf_token %}
+          <button type="submit">Logout</button>
+        </form>
+      </li>
       <li class="nav-menu__item"><a href="{% url 'profile' %}">Profile</a></li>
       {% else %}
       <li class="nav-menu__item"><a href="{% url 'login' %}">Log in</a></li>
@@ -26,7 +33,7 @@
 </div>
 <div id="nav-minibar">
   <ul class="nav-mini">
-    <li class="nav-mini__item"><a href="{% url 'knowhub-home' %}">Finnish Immigration Service</a></li>
+    <li class="nav-mini__item"><a href="{% url 'category-detail' category_slug='category3' %}">Finnish Immigration Service</a></li>
     <li class="nav-mini__item"><a href="{% url 'category-detail' category_slug='category1' %}">Kela</a></li>
     <li class="nav-mini__item"><a href="{% url 'category-detail' category_slug='category2' %}">TE services</a></li>
     <li class="nav-mini__item"><a href="{% url "services-list" %}">Services</a></li>

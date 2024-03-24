@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -15,13 +16,13 @@ from django.views.generic import (
     DeleteView,
 )
 
-
+@login_required
 def home(request):
-    context = {"articles": Articles.objects.all()}
-    return render(request, "knowhub/home.html", context)
+    # context = {"articles": Articles.objects.all()}
+    return render(request, "knowhub/home.html")
 
 
-class ArticleListView(ListView):
+class ArticleListView(LoginRequiredMixin, ListView):
     model = Articles
     template_name = "knowhub/home.html"
     context_object_name = "articles"
@@ -100,7 +101,7 @@ class CategoryDetailView(LoginRequiredMixin, DetailView):
         articles = Articles.objects.filter(category=category)
         if self.request.GET.get("title"):
             articles = articles.filter(name__icontains=self.request.GET.get("title"))
-        paginator = Paginator(articles, 3)
+        paginator = Paginator(articles, 4)
 
         page_number = self.request.GET.get("page")
         page_obj = paginator.get_page(page_number)
@@ -111,13 +112,13 @@ class CategoryDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class CommentCreateView(CreateView):
+class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
     fields = ("text",)
     template_name = "knowhub/comment.html"
 
     def get_success_url(self):
-        return self.object.article.get_absolute_url()
+        return reverse("all-comments", kwargs={"pk": self.kwargs["pk"]})
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -130,7 +131,7 @@ class CommentCreateView(CreateView):
         return context
 
 
-class CommentDetailView(DetailView):
+class CommentDetailView(LoginRequiredMixin, DetailView):
     model = Comment
     template_name = "knowhub/comment_detail.html"
 
@@ -147,7 +148,7 @@ class CommentUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "knowhub/comment_update.html"
 
     def get_success_url(self):
-        return reverse_lazy("article-detail", kwargs={"pk": self.object.article.pk})
+        return reverse_lazy("all-comments", kwargs={"pk": self.object.article.pk})
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -159,7 +160,7 @@ class CommentDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "knowhub/comment_confirm_delete.html"
 
     def get_success_url(self):
-        return reverse_lazy("article-detail", kwargs={"pk": self.object.article.pk})
+        return reverse_lazy("all-comments", kwargs={"pk": self.object.article.pk})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -263,11 +264,25 @@ class SearchView(View):
         }
         return render(request, 'knowhub/search_results.html', context)
 
+class AllCommentsView(LoginRequiredMixin, ListView):
+    template_name = "knowhub/all_comments.html"
+    context_object_name = "comments"
 
+    def get_queryset(self):
+        article_id = self.kwargs.get("pk")
+        return Comment.objects.filter(article_id=article_id)
 
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        article = get_object_or_404(Articles, pk=self.kwargs.get("pk"))
+        context["article"] = article
+        context['form'] = CommentForm()
+        return context
 
 
 
 def about(request):
-    return render(request, "knowhub/about.html", {"title": "About something"})
+    return render(
+        request, "includes/about.html",
+        {"title": "About something", "is_about_page": True}
+    )
