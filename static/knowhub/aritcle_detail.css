@@ -1,0 +1,85 @@
+html{
+    /*background-image: url('https://img.freepik.com/free-vector/freeform-gradient-is-a-background-image-with-a-beautiful-color-combination-illustration_1258-49111.jpg');*/
+    /*background-size: cover;*/
+    /*background-color: #50779B !important;*/
+}
+.user-photo {
+    width: 170px;
+    border-radius: 50%;
+    display: block;
+    margin-left: 400px;
+    margin-top: 10px;
+}
+.user-photo:hover{
+    transform: scale(1.1);
+    transition: transform 0.3s ease-in-out;
+}
+.publ-date{
+    margin-left: 430px;
+    color: rgb(113, 111, 111);
+    font-size: 15px;
+    font-style: italic;
+}
+
+.custom-btn {
+    margin-left: 380px;
+    margin-right: 0;
+    background-color: black;
+}
+
+.custom-delete-btn {
+    margin-left: 0;
+    background-color: #4CAF50;
+}
+
+.publ-user {
+    margin-left: 430px;
+    margin-bottom: 3px;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.article-title {
+    text-align: center;
+    color: rgb(6, 6, 56);
+    font-size: 30px;
+
+}
+.article-text {
+    margin: 0 auto;
+    width: 600px;
+    font-size: 20px;
+    letter-spacing: 1.2px;
+    margin-bottom: 40px;
+    text-align: justify;
+}
+.article-text:hover{
+    /*transform: scale(1.05);*/
+    /*transition: transform 0.3s ease-in-out;*/
+}
+
+
+.article-btn {
+    margin-left: 430px;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 25px;
+    border-radius: 10px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: white;
+    transition: .15s ease-in-out;
+    margin-bottom: 20px;
+
+    font-size: 15px;
+    box-shadow: 0 0 10px 0 #a3b9d9 inset, 0 0 10px 4px #a3b9d9;
+    color: #a3b9d9;
+
+}
+
+.article-btn:hover,
+.article-btn:focus{
+    cursor: pointer;
+    box-shadow: 0 0 40px 40px #a3b9d9 inset, 0 0 0 0 #a3b9d9;
+    color: white;
+}
