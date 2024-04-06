@@ -1,22 +1,24 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-  <img class="rounded-circle article-img" src="{{ object.owner.profile.image.url }}" alt="">
-  <ul>
-    <li>
-      <h2>{{ object.owner.username }}</h2>
-      <h2>{{ object.name }}</h2>
-      <p>{{ object.description }}</p>
-      <p>{{ object.price }}</p>
-      <p>{{ object.content }}</p>
-    </li>
-  </ul>
 
-  {% if object.owner == request.user %}
-    <div>
-      <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'services-update' object.id %}">Update</a>
-      <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'services-delete' object.id %}">Delete</a>
-    </div>
-  {% endif %}
+  <link rel="stylesheet" href="{% static "knowhub/services_detail.css" %}">
+  <section class="article-wrapper">
+    <img class="user-photo"
+         src="{{ object.owner.profile.image.url }}"
+         alt="user photo">
+    <p class="publ-user">{{ object.owner.username }}</p>
+
+    {% if object.owner == request.user %}
+      <div>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1 custom-btn" href="{% url 'services-update' object.id %}">Update
+          Service</a>
+        <a class="btn btn-danger btn-sm mt-1 mb-1 custom-delete-btn" href="{% url 'services-delete' object.id %}">Delete
+          Service</a>
+      </div>
+    {% endif %}
+    <h2 class="article-title">{{ object.description }}</h2>
+    <p class="article-text">Price: €{{ object.price }}</p>
+  </section>
 {% endblock content %}
-

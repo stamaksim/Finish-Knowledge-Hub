@@ -1,9 +1,13 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
+  <div class="content-form">
+  <link rel="stylesheet" href="{% static "knowhub/service_update.css" %}">
 <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
-  <button type="submit">Save changes</button>
+  <button type="submit" class="button-change">Save changes</button>
 </form>
+  </div>
 {% endblock content %}

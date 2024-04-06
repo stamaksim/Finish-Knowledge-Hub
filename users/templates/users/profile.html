@@ -1,26 +1,40 @@
-{% extends "base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link rel="stylesheet" href="{% static "knowhub/main.css" %}">
+  <link rel="stylesheet" href="{% static "knowhub/profile.css" %}">
+</head>
+{% block navbar %}
+  {% include "includes/navbar.html" %}
+{% endblock navbar %}
 
-{% load crispy_forms_tags %}
-{% load crispy_forms_filters %}
-{% block content %}
-  <div class="content-section">
-    <div class="media">
-      <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
-      <div class="media-body">
-        <h2 class="account-heading">{{ user.username }}</h2>
-        <p class="content-secondary">{{ user.email }}</p>
-      </div>
-    </div>
-    <form method="POST" enctype="multipart/form-data">
-      {% csrf_token %}
-      <fieldset class="form-group">
-        <legend class="border-bottom mb-4">Profile Into</legend>
-        {{ u_form|crispy }}
-        {{ p_form|crispy }}
-      </fieldset>
-      <div class="form-group">
-        <button class="btn btn-outline-info" type="submit">Update</button>
-      </div>
-    </form>
-  </div>
-{% endblock content %}
+<body>
+<header></header>
+<main>
+  {% block content %}
+    <section class="about-section">
+      <img class="about-user-photo" src="{{ user.profile.image.url }}" alt="user-photo" width="200">
+      <h1 class="about-name">{{ user.username }}</h1>
+      <a class="about-user-email" href="mailto:userEmail@gmail.com">{{ user.email }}</a>
+    </section>
+    <section class="info-section">
+      <h2 class="info-title">Profile info</h2>
+      <form method="POST" enctype="multipart/form-data" action="{% url "profile" %}" class="profile-form">
+        {% csrf_token %}
+        {{ u_form.as_p }}
+        {{ p_form.as_p }}
+
+        <button type="submit" class="update-btn">Update</button>
+      </form>
+    </section>
+  {% endblock content %}
+</main>
+<script src="{% static "js/navbar.js" %}"></script>
+<footer></footer>
+
+</body>
+</html>

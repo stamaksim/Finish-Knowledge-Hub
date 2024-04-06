@@ -1,71 +1,66 @@
 {% extends "base.html" %}
 
+
 {% load crispy_forms_filters %}
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+{% load static %}
+<link rel="stylesheet" href="{% static "knowhub/main.css" %}">
 {% block content %}
-  <div class="row">
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Create New Article</h5>
-          <p class="card-text">Click the button below to create a new article in this category.</p>
-          <a href="{% url 'article-create' %}" class="btn btn-primary">Create Article</a>
+  <link rel="stylesheet" href="{% static "knowhub/category_detail.css" %}">
+  <div class="category-page page__content">
 
-        </div>
-      </div>
+    <a href="{% url 'article-create' %}" class="posts__btn">
+      <button>Create Article</button>
+    </a>
+
+
+    <div class="category-info">
+      <form method="get" action="" class="form">
+        <input type="text" name="title" placeholder="Search by Title" class="form-control"
+               value="{{ request.GET.title }}">
+        <button class="btn btn-secondary" type="submit">🔎</button>
+      </form>
+
     </div>
+
+    <div class="posts-container">
+      {% for article in article_list %}
+        <div class="post">
+          <div class="post-content">
+            <h2 class="post-title">{{ article.title }}</h2>
+            <p>{{ article.name }}</p>
+            <a href="{% url "article-detail" article.id %}" class="post-link">Read more</a>
+            <p class="post-date">{{ article.creation_date|date:"F d, Y" }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <!-- search form-->
     <div class="col-md-8">
-      <div class="category-info">
-        <form method="get" action="" class="form-inline">
-          {{ search_form|crispy }}
-          <button class="btn btn-secondary" type="submit">🔎</button>
-        </form>
-        <h1>{{ category.name }}</h1>
-        <p><b>{{ category.description }}</b></p>
-      </div>
-      <div class="article-list">
-        <ul class="list-group">
-          {% for article in article_list %}
-            <li class="list-group-item">
-              <article class="media">
-                <img class="rounded-circle article-img" src="{{ article.user.profile.image.url }}" alt="">
-                <div class="media-body">
-                  <div class="article-metadata">
-                    <a class="mr-2" href="#">{{ article.user.username }}</a>
-                    <small class="text-muted">{{ article.creation_date|date:"F d, Y" }}</small>
-                  </div>
-                  <h2><a class="article-title" href="{% url "article-detail" article.id %}">{{ article.name }}</a></h2>
-                  <p class="article-content">{{ article.description }}</p>
-                </div>
-              </article>
-            </li>
-          {% empty %}
-            <li class="list-group-item">No articles found in this category.</li>
-          {% endfor %}
-        </ul>
-      </div>
-      <!-- Відображення пагінації -->
-      <div class="pagination">
-          <span class="step-links">
-              {% if article_list.has_previous %}
-                <a href="?page=1">&laquo; First Page</a>
-                <a href="?page={{ article_list.previous_page_number }}">Previous</a>
-              {% endif %}
-
-            <span class="current">
-                  Page {{ article_list.number }} з {{ article_list.paginator.num_pages }}.
-              </span>
-
-            {% if article_list.has_next %}
-              <a href="?page={{ article_list.next_page_number }}">Next</a>
-              <a href="?page={{ article_list.paginator.num_pages }}">Last &raquo;</a>
+      <!-- end block search form-->
+      <!-- pagination-->
+      <section class="pagination">
+        <div class="pagination__container container">
+          <ul class="pagination">
+            {% if article_list.has_previous %}
+              <li class="page-item"><a class="page-link" href="?page=1">&laquo; First Page</a></li>
+              <li class="page-item"><a class="page-link"
+                                       href="?page={{ article_list.previous_page_number }}">Previous</a>
+              </li>
             {% endif %}
-          </span>
-      </div>
+            <li class="page-item"><span
+                class="page-link">Page {{ article_list.number }} of {{ article_list.paginator.num_pages }}</span></li>
+            {% if article_list.has_next %}
+              <li class="page-item"><a class="page-link" href="?page={{ article_list.next_page_number }}">Next</a></li>
+              <li class="page-item"><a class="page-link" href="?page={{ article_list.paginator.num_pages }}">Last
+                &raquo;</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </section>
     </div>
   </div>
-{% endblock %}
-
-
-
-
+  <!-- end block pagination -->
+{% endblock content %}

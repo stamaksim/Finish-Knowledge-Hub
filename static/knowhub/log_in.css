@@ -19,7 +19,7 @@
   .img-logo {
     position: absolute;
     margin: 240px 500px;
-    top: 20;
+    top: 20px;
     right: -500px;
     transform: translateX(-10%);
     z-index: -1;

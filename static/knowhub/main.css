@@ -1,4 +1,4 @@
-*, ::after, ::before {
+*, ul, ::after, ::before {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -9,9 +9,7 @@
   width: 100%;
   min-width: 1440px;
   height: 100px;
-  margin-bottom: 4px;
-  background: linear-gradient(90deg, #212346 0%, #5385A9 100%);
-  margin-bottom: 55px;
+  background: linear-gradient(90deg, #212346 0%, #5385A9 100%)
 }
 
 #nav-minibar {
@@ -22,7 +20,7 @@
   margin-bottom: 20px;
   height: 0;
   position: fixed;
-  top: 102px;
+  top: 100px;
   left: 0;
   overflow-x: hidden;
   transition: 0.5s;
@@ -78,7 +76,7 @@
 }
 
 .nav-menu__item:last-child {
-  margin-right: 0px;
+  margin-right: 0;
 }
 
 .nav-menu__item a {
@@ -192,8 +190,8 @@ a:hover {
   opacity: 0.3;
 }
 
-.carousel {
-  margin-bottom: 20px;
+.page__content {
+  min-height: calc(100vh - 100px - 190px);
 }
 
 .btn-primary {
@@ -216,4 +214,12 @@ a:hover {
   --bs-btn-disabled-color: #2c2c2c;
   --bs-btn-disabled-bg: #0d6efd;
   --bs-btn-disabled-border-color: #0d6efd;
+}
+
+body, button, input, select, textarea, a, p, h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto', sans-serif;
+}
+
+.article-wrapper {
+  min-height: calc(100vh - 100px - 190px);
 }
