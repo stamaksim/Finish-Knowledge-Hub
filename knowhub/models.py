@@ -54,7 +54,7 @@ class Articles(models.Model):
         return f"{self.category}: ({self.name}{self.description})"
 
     def get_absolute_url(self):
-        return reverse("article-detail-slug", kwargs={"pk": self.pk})
+        return reverse("article-detail", kwargs={"pk": self.pk})
 
 
 class Services(models.Model):

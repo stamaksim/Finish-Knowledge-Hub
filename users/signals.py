@@ -14,5 +14,10 @@ def create_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_profile(sender, instance, **kwargs):
     print("Updating profile...")
-    if hasattr(instance, "profile"):
-        instance.profile.save()
+    try:
+        profile = instance.profile
+    except Profile.DoesNotExist:
+        profile = None
+
+    if profile:
+        profile.save()

@@ -7,6 +7,7 @@ from django.urls import reverse, reverse_lazy
 from django.views import generic, View
 from django.views.generic.edit import FormMixin
 from knowhub.forms import CommentForm, ArticlesSearchForm, ServiceSearchForm
+from django.contrib import messages
 from knowhub.models import Articles, Category, Comment, Services
 from django.views.generic import (
     ListView,
@@ -15,6 +16,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
+
 
 @login_required
 def home(request):
@@ -59,7 +61,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
 
 class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Articles
-    fields = ["category", "description", "name"]
+    fields = ["category", "description", "name", "text"]
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -92,8 +94,8 @@ class CategoryListView(LoginRequiredMixin, generic.ListView):
 class CategoryDetailView(LoginRequiredMixin, DetailView):
     model = Category
     template_name = "knowhub/category_detail.html"
-    slug_url_kwarg = 'category_slug'
-    slug_field = 'slug'
+    slug_url_kwarg = "category_slug"
+    slug_field = "slug"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -101,7 +103,7 @@ class CategoryDetailView(LoginRequiredMixin, DetailView):
         articles = Articles.objects.filter(category=category)
         if self.request.GET.get("title"):
             articles = articles.filter(name__icontains=self.request.GET.get("title"))
-        paginator = Paginator(articles, 4)
+        paginator = Paginator(articles, 6)
 
         page_number = self.request.GET.get("page")
         page_obj = paginator.get_page(page_number)
@@ -154,6 +156,13 @@ class CommentUpdateView(LoginRequiredMixin, UpdateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
+    def dispatch(self, request, *args, **kwargs):
+        comment = self.get_object()
+        if comment.author != request.user:
+            messages.error(request, "You are not authorized to edit this comment")
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
+
 
 class CommentDeleteView(LoginRequiredMixin, DeleteView):
     model = Comment
@@ -166,6 +175,13 @@ class CommentDeleteView(LoginRequiredMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         context["comment"] = self.object
         return context
+
+    def dispatch(self, request, *args, **kwargs):
+        comment = self.get_object()
+        if comment.author != request.user:
+            messages.error(request, "You are not authorized to delete this comment")
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
 
 
 class ServicesListView(LoginRequiredMixin, ListView):
@@ -191,8 +207,6 @@ class ServicesListView(LoginRequiredMixin, ListView):
 class ServicesDetailView(LoginRequiredMixin, DetailView):
     model = Services
     template_name = "knowhub/services_detail.html"
-
-
 
 
 class ServicesCreateView(LoginRequiredMixin, CreateView):
@@ -238,31 +252,31 @@ class ServicesDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 class SearchView(View):
     def get(self, request):
-        search_type = request.GET.get('search_type')
-        search_query = request.GET.get('query')
+        search_type = request.GET.get("search_type")
+        search_query = request.GET.get("query")
 
-        if search_query:  # Використовуйте truthiness для перевірки на пустий рядок
+        if search_query:
             articles = Articles.objects.filter(name__icontains=search_query)
             services = Services.objects.filter(name__icontains=search_query)
 
-            if search_type == 'articles':
+            if search_type == "articles":
                 results = articles
-            elif search_type == 'services':
+            elif search_type == "services":
                 results = services
             else:
-                results = list(articles) + list(services)  # Об'єднати результати пошуку
+                results = list(articles) + list(services)
         else:
-            # Вивести всі статті та послуги, якщо пошуковий запит відсутній
             articles = Articles.objects.all()
             services = Services.objects.all()
             results = list(articles) + list(services)
 
         context = {
-            'results': results,
-            'search_query': search_query,
-            'search_type': search_type,
+            "results": results,
+            "search_query": search_query,
+            "search_type": search_type,
         }
-        return render(request, 'knowhub/search_results.html', context)
+        return render(request, "knowhub/search_results.html", context)
+
 
 class AllCommentsView(LoginRequiredMixin, ListView):
     template_name = "knowhub/all_comments.html"
@@ -276,13 +290,13 @@ class AllCommentsView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         article = get_object_or_404(Articles, pk=self.kwargs.get("pk"))
         context["article"] = article
-        context['form'] = CommentForm()
+        context["form"] = CommentForm()
         return context
-
 
 
 def about(request):
     return render(
-        request, "includes/about.html",
-        {"title": "About something", "is_about_page": True}
+        request,
+        "includes/about.html",
+        {"title": "About something", "is_about_page": True},
     )
