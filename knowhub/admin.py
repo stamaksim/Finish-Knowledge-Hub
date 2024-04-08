@@ -7,7 +7,7 @@ from knowhub.models import User, Category, Services, Articles
 @admin.register(Services)
 class ServicesAdmin(admin.ModelAdmin):
     list_display = ["name", "description", "category", "price"]
-    list_filter = ["category"]
+    list_filter = ["description"]
     search_fields = ["name"]
 
 

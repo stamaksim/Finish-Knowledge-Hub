@@ -24,15 +24,26 @@
             <p class="comments-item-text">{{ comment.text }}</p>
           </div>
           <p class="comments-item-date">{{ comment.date }}</p>
+            {% if comment.author == request.user %}
+      <div class="btn-wrapper">
+        <a href="{% url 'comment-update' comment.pk %}">
+          <button class="edit-btn">Edit</button>
+        </a>
+        <form action="{% url 'comment-delete' comment.pk %}" method="post">
+          {% csrf_token %}
+          <button class="del-btn" type="submit">Delete</button>
+        </form>
+      </div>
+    {% endif %}
         </li>
-        <div class="btn-wrapper">
-          <a href="{% url 'comment-update' comment.pk %}">
-            <button class="edit-btn">Edit</button>
-          </a>
-          <a href="{% url 'comment-delete' comment.pk %}">
-            <button class="del-btn">Delete</button>
-          </a>
-        </div>
+{#        <div class="btn-wrapper">#}
+{#          <a href="{% url 'comment-update' comment.pk %}">#}
+{#            <button class="edit-btn">Edit</button>#}
+{#          </a>#}
+{#          <a href="{% url 'comment-delete' comment.pk %}">#}
+{#            <button class="del-btn">Delete</button>#}
+{#          </a>#}
+{#        </div>#}
       {% empty %}
         <p>No comments yet.</p>
       {% endfor %}

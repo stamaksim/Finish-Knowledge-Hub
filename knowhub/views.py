@@ -156,12 +156,12 @@ class CommentUpdateView(LoginRequiredMixin, UpdateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-    def dispatch(self, request, *args, **kwargs):
-        comment = self.get_object()
-        if comment.author != request.user:
-            messages.error(request, "You are not authorized to edit this comment")
-            return self.handle_no_permission()
-        return super().dispatch(request, *args, **kwargs)
+    # def dispatch(self, request, *args, **kwargs):
+    #     comment = self.get_object()
+    #     if comment.author != request.user:
+    #         messages.error(request, "You are not authorized to edit this comment")
+    #         return self.handle_no_permission()
+    #     return super().dispatch(request, *args, **kwargs)
 
 
 class CommentDeleteView(LoginRequiredMixin, DeleteView):
@@ -176,12 +176,12 @@ class CommentDeleteView(LoginRequiredMixin, DeleteView):
         context["comment"] = self.object
         return context
 
-    def dispatch(self, request, *args, **kwargs):
-        comment = self.get_object()
-        if comment.author != request.user:
-            messages.error(request, "You are not authorized to delete this comment")
-            return self.handle_no_permission()
-        return super().dispatch(request, *args, **kwargs)
+    # def dispatch(self, request, *args, **kwargs):
+    #     comment = self.get_object()
+    #     if comment.author != request.user:
+    #         messages.error(request, "You are not authorized to delete this comment")
+    #         return self.handle_no_permission()
+    #     return super().dispatch(request, *args, **kwargs)
 
 
 class ServicesListView(LoginRequiredMixin, ListView):
@@ -241,7 +241,7 @@ class ServicesUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class ServicesDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Services
-    success_url = "/"
+    success_url = reverse_lazy("services-list")
 
     def test_func(self):
         serw = self.get_object()

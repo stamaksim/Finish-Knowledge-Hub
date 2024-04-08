@@ -1,17 +1,16 @@
 {% extends "base.html" %}
-
-{% load crispy_forms_filters %}
-{% load crispy_forms_tags %}
+{% load static %}
 {% block content %}
+  <link rel="stylesheet" href="{% static "knowhub/create_service.css" %}">
   <div class="content-section">
     <form method="POST">
       {% csrf_token %}
       <fieldset class="form-group">
         <legend class="border-bottom mb-4">Services</legend>
-        {{ form|crispy }}
+        {{ form }}
       </fieldset>
       <div class="form-group">
-        <button class="btn btn-outline-info" type="submit">Services</button>
+        <button class="btn btn-outline-info" type="submit">Create Services</button>
       </div>
     </form>
   </div>
