@@ -20,7 +20,6 @@ from django.views.generic import (
 
 @login_required
 def home(request):
-    # context = {"articles": Articles.objects.all()}
     return render(request, "knowhub/home.html")
 
 
@@ -156,13 +155,6 @@ class CommentUpdateView(LoginRequiredMixin, UpdateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-    # def dispatch(self, request, *args, **kwargs):
-    #     comment = self.get_object()
-    #     if comment.author != request.user:
-    #         messages.error(request, "You are not authorized to edit this comment")
-    #         return self.handle_no_permission()
-    #     return super().dispatch(request, *args, **kwargs)
-
 
 class CommentDeleteView(LoginRequiredMixin, DeleteView):
     model = Comment
@@ -175,13 +167,6 @@ class CommentDeleteView(LoginRequiredMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         context["comment"] = self.object
         return context
-
-    # def dispatch(self, request, *args, **kwargs):
-    #     comment = self.get_object()
-    #     if comment.author != request.user:
-    #         messages.error(request, "You are not authorized to delete this comment")
-    #         return self.handle_no_permission()
-    #     return super().dispatch(request, *args, **kwargs)
 
 
 class ServicesListView(LoginRequiredMixin, ListView):

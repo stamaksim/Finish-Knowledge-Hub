@@ -43,8 +43,8 @@ urlpatterns = [
         name="category-detail",
     ),
     path("post/<int:pk>/comments/", AllCommentsView.as_view(), name="all-comments"),
-    path("comment/<int:pk>/update", CommentUpdateView.as_view(), name="comment-update"),
-    path("comment/<int:pk>/delete", CommentDeleteView.as_view(), name="comment-delete"),
+    path("comment/<int:pk>/update/", CommentUpdateView.as_view(), name="comment-update"),
+    path("comment/<int:pk>/delete/", CommentDeleteView.as_view(), name="comment-delete"),
     path("services/", ServicesListView.as_view(), name="services-list"),
     path("services/create/", ServicesCreateView.as_view(), name="services-create"),
     path("services/<int:pk>/", ServicesDetailView.as_view(), name="services-detail"),
@@ -59,5 +59,4 @@ urlpatterns = [
         name="services-delete",
     ),
     path("search/", SearchView.as_view(), name="search-results"),
-    # path('article/<slug:slug>/', ArticleDetailView.as_view(), name="article-detail-slug"),
 ]
