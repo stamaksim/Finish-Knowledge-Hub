@@ -34,11 +34,15 @@ urlpatterns = [
     ),
     path(
         "logout/",
-        auth_views.LogoutView.as_view(template_name="registration/logged_out.html"),
+        auth_views.LogoutView.as_view(
+            template_name="registration/logged_out.html"
+        ),
         name="logout",
     ),
     path("", include("knowhub.urls")),
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+    )

@@ -9,7 +9,14 @@ class CustomerUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ["first_name", "last_name", "username", "email", "password1", "password2"]
+        fields = [
+            "first_name",
+            "last_name",
+            "username",
+            "email",
+            "password1",
+            "password2",
+        ]
 
 
 class UserUpdateForm(forms.ModelForm):
@@ -17,11 +24,14 @@ class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "username", "email",]
+        fields = [
+            "first_name",
+            "last_name",
+            "username",
+            "email",
+        ]
 
-        help_texts = {
-            "username": ""
-        }
+        help_texts = {"username": ""}
 
 
 class ProfileUpdateForm(forms.ModelForm):
