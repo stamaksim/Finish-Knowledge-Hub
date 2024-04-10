@@ -13,3 +13,34 @@ category has its own search bar implemented.
 
 The project is planned to be developed further. Currently, the layout of all pages is planned to be designed to improve
 the website's visual appearance.
+
+## Installation and Setup
+
+To install and run the project, follow these steps:
+
+1. Clone the repository to your computer:
+   git clone https://github.com/stamaksim/finish-knowledge-hub
+
+2. Install dependencies using your package manager of choice:
+   cd finish-knowledge-hub
+   npm install
+
+3. Configure settings if necessary.
+
+4. Start the server:
+   npm start
+
+## Usage
+
+To use the project, navigate to [GitHub repository](https://github.com/stamaksim/finish-knowledge-hub).
+
+## Contributing
+
+If you wish to contribute to the development of the project, please consider creating a Pull Request with your changes
+or opening an Issue to discuss new features or report bugs.
+
+## Support
+
+If you have any questions or issues regarding the use of the project, please contact us at stamaksim1986@gmail.com
+
+
