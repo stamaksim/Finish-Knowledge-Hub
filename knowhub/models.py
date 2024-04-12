@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
-from django.db import models
+from django.db import models, migrations
 from django.utils import timezone
 from django.urls import reverse
 from django.utils.text import slugify
@@ -39,12 +39,12 @@ class Category(models.Model):
 class Articles(models.Model):
     name = models.CharField(max_length=65)
     category = models.ForeignKey(
-        Category, on_delete=models.CASCADE, related_name="categories_articles"
+        Category, on_delete=models.CASCADE, related_name="articles"
     )
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="articles_users",
+        related_name="articles",
     )
     description = models.CharField(max_length=255)
     text = models.TextField()
@@ -84,7 +84,7 @@ class Comment(models.Model):
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="comments_authors",
+        related_name="comments",
     )
 
     class Meta:

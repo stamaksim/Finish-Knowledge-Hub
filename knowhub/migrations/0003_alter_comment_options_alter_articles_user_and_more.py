@@ -49,3 +49,4 @@ class Migration(migrations.Migration):
             field=models.TextField(max_length=500),
         ),
     ]
+

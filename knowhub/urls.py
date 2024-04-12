@@ -40,7 +40,7 @@ urlpatterns = [
     path(
         "categories/<slug:category_slug>/",
         CategoryDetailView.as_view(),
-        name="category-detail",
+        name="category-detail-slug",
     ),
     path("post/<int:pk>/comments/", AllCommentsView.as_view(), name="all-comments"),
     path("comment/<int:pk>/update/", CommentUpdateView.as_view(), name="comment-update"),

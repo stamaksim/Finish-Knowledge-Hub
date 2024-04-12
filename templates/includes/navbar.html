@@ -33,10 +33,11 @@
 </div>
 <div id="nav-minibar">
   <ul class="nav-mini">
-    <li class="nav-mini__item"><a href="{% url 'category-detail' category_slug='category3' %}">Finnish Immigration
+    <li class="nav-mini__item"><a href="{% url 'category-detail-slug' category_slug='finish-immigration-service' %}">Finnish
+      Immigration
       Service</a></li>
-    <li class="nav-mini__item"><a href="{% url 'category-detail' category_slug='category1' %}">Kela</a></li>
-    <li class="nav-mini__item"><a href="{% url 'category-detail' category_slug='category2' %}">TE services</a></li>
+    <li class="nav-mini__item"><a href="{% url 'category-detail-slug' category_slug='kela' %}">Kela</a></li>
+    <li class="nav-mini__item"><a href="{% url 'category-detail-slug' category_slug='te-service' %}">TE services</a></li>
     <li class="nav-mini__item"><a href="{% url "services-list" %}">Services</a></li>
   </ul>
 </div>

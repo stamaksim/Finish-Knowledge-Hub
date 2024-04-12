@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse, reverse_lazy
 from django.views import generic, View
 from django.views.generic.edit import FormMixin
@@ -16,6 +16,12 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
+
+
+class UserOwnedMixin:
+    def test_func(self):
+        obj = self.get_object()
+        return self.request.user == obj.user or self.request.user == obj.owner
 
 
 @login_required
@@ -58,7 +64,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
         return reverse("article-detail", kwargs={"pk": self.object.pk})
 
 
-class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class ArticleUpdateView(LoginRequiredMixin, UserOwnedMixin, UpdateView):
     model = Articles
     fields = ["category", "description", "name", "text"]
 
@@ -66,22 +72,10 @@ class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-    def test_func(self):
-        article = self.get_object()
-        if self.request.user == article.user:
-            return True
-        return False
 
-
-class ArticleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class ArticleDeleteView(LoginRequiredMixin, UserOwnedMixin, DeleteView):
     model = Articles
     success_url = "/"
-
-    def test_func(self):
-        article = self.get_object()
-        if self.request.user == article.user:
-            return True
-        return False
 
 
 class CategoryListView(LoginRequiredMixin, generic.ListView):
@@ -207,7 +201,7 @@ class ServicesCreateView(LoginRequiredMixin, CreateView):
         return reverse("services-detail", kwargs={"pk": self.object.pk})
 
 
-class ServicesUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class ServicesUpdateView(LoginRequiredMixin, UserOwnedMixin, UpdateView):
     model = Services
     fields = ["category", "description", "name"]
     template_name = "knowhub/services_update.html"
@@ -217,22 +211,10 @@ class ServicesUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         form.instance.owner = self.request.user
         return super().form_valid(form)
 
-    def test_func(self):
-        serv = self.get_object()
-        if self.request.user == serv.owner:
-            return True
-        return False
 
-
-class ServicesDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class ServicesDeleteView(LoginRequiredMixin, UserOwnedMixin, DeleteView):
     model = Services
     success_url = reverse_lazy("services-list")
-
-    def test_func(self):
-        serw = self.get_object()
-        if self.request.user == serw.owner:
-            return True
-        return False
 
 
 class SearchView(View):

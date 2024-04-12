@@ -14,7 +14,7 @@
       <div class="content">
         <h1>Finnish<br>Immigration Service</h1>
         <p>Here you can find information for immigrants and asylum seekers </p>
-        <a href="{% url 'category-detail' category_slug='category3'%}" class="btn btn-primary">Explore</a>
+        <a href="{% url 'category-detail-slug' category_slug='finish-immigration-service'%}" class="btn btn-primary">Explore</a>
       </div>
       <div class="overlay"></div>
       <img src="{% static "images/For immigrants.jpg" %}" class="d-block w-100" alt="...">
@@ -23,7 +23,7 @@
       <div class="content-2">
         <h1>KELA</h1>
         <p>Get information about Kela or request a consultation </p>
-        <a href="{% url 'category-detail' category_slug='category1' %}">
+        <a href="{% url 'category-detail-slug' category_slug='kela' %}">
           <button type="button" class="btn btn-primary">Explore</button>
         </a>
       </div>
@@ -34,7 +34,7 @@
       <div class="content-3">
         <h1>TE <br>Toimisto</h1>
         <p>Here you can find information for immigrants and asylum seekers </p>
-        <a href="{% url 'category-detail' category_slug='category2'%}">
+        <a href="{% url 'category-detail-slug' category_slug='te-service'%}">
           <button type="button" class="btn btn-primary">Explore</button>
         </a>
       </div>
