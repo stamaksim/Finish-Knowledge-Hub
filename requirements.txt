@@ -1,7 +1,15 @@
 asgiref==3.7.2
+black==24.2.0
+click==8.1.7
+colorama==0.4.6
 crispy-bootstrap4==2023.1
 Django==5.0.4
 django-crispy-forms==2.1
+git-filter-repo==2.38.0
+mypy-extensions==1.0.0
+packaging==23.2
+pathspec==0.12.1
+pillow==10.2.0
+platformdirs==4.2.0
 sqlparse==0.4.4
 tzdata==2024.1
-pillow~=10.2.0
