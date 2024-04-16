@@ -43,4 +43,10 @@ or opening an Issue to discuss new features or report bugs.
 
 If you have any questions or issues regarding the use of the project, please contact us at stamaksim1986@gmail.com
 
+link of finish-knowledge-hub
+https://finish-knowledge-hub.onrender.com
+
+username: admin
+password: Test12345
+
 
