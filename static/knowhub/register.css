@@ -1,0 +1,66 @@
+/* Form Styles */
+.content-section {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 20px;
+  background-color: #bfbfc9;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+legend {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+  border-bottom: 2px solid #333;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-top: 5px;
+}
+
+button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.text-muted {
+  font-size: 14px;
+  color: #666;
+}
+
+.text-muted a {
+  color: #007bff;
+}
+
+.text-muted a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,174 @@
+root{
+    --bs-btn-color: #2c2c2c;
+    --bs-btn-bg: #ffffff;
+    --bs-btn-border-color: hsl(0, 0%, 100%);
+    --bs-btn-hover-color: #2c2c2c;
+    --bs-btn-hover-bg: #a3b9d9;
+    --bs-btn-hover-border-color: #a3b9d9;
+    --bs-btn-focus-shadow-rgb: 49,132,253;
+    --bs-btn-active-color: #2c2c2c;
+    --bs-btn-active-bg: #50779B;
+    --bs-btn-active-border-color: #50779B;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #2c2c2c;
+    --bs-btn-disabled-bg: #0d6efd;
+    --bs-btn-disabled-border-color: #0d6efd;
+}
+html{
+    /*background-image: url('https://img.freepik.com/free-vector/freeform-gradient-is-a-background-image-with-a-beautiful-color-combination-illustration_1258-49111.jpg');*/
+    background-size: cover;
+    /*background-color: lightblue;*/
+}
+h1, h2, h3, h4,p{
+    margin: 0;
+}
+
+.about-section {
+    margin-bottom: 30px;
+    text-align: center;
+
+}
+.about-user-photo {
+    margin-top: 10px;
+    width: 150px;
+    margin-bottom: 10px;
+}
+.about-name {
+    font-size: 25px;
+    color: #2c2c2c;
+    margin-bottom: 10px;
+
+}
+.abour-user-email {
+    text-decoration: none;
+    color: #355675;
+
+}
+
+.info-section {
+    margin: auto;
+    text-align: center;
+    border-radius: 5px;
+    padding: 20px;
+    width: 600px;
+    /*background-color: #f9f9f9;*/
+}
+    /*background-image: linear-gradient(rgba(46, 47, 66, 0.149), rgba(46, 47, 66, 0.44))}*/
+
+.info-title {
+    font-size: 22px;
+    /*color: rgb(197, 222, 244);*/
+    margin-bottom: 15px;
+}
+.info-user-name {
+    font-size: 20px;
+    color: aliceblue;
+
+}
+.info-name {
+    font-size: 15px;
+    color:  rgba(200, 200, 200, 0.652);
+    margin-bottom: 15px;
+}
+.info-user-email {
+    font-size: 20px;
+    color: aliceblue;
+}
+.info-mail {
+    font-size: 15px;
+    color:  rgba(200, 200, 200, 0.652);
+    margin-bottom: 15px;
+}
+.change-div {
+    display: flex;
+    margin-bottom: 15px;
+}
+.change {
+    font-size: 20px;
+    color: rgb(197, 222, 244);
+    margin-right: 15px;
+}
+.choose-btn {
+    background-color: #d2e2fa;
+    color: #2c2c2c;
+    margin-right: 5px;
+    border-radius: 2px;
+}
+.choose-btn:hover,
+.choose-btn:focus{
+    cursor: pointer;
+    background-color: #a3b9d9;
+
+}
+.file-not-choose {
+    color:  rgba(200, 200, 200, 0.652);
+
+}
+.ubpate-btn {
+    background-color: #d2e2fa;
+    color: #2c2c2c;
+    margin-right: 5px;
+    border-radius: 2px;
+    padding: 10px 15px;
+    font-size: 13px;
+    border-radius: 5px;
+
+}
+.ubpate-btn:hover,
+.ubpate-btn:focus{
+    cursor: pointer;
+    background-color: #88a3cb;
+
+}
+
+/* Стилі для форми профілю */
+.profile-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-linear-gradient(90deg, rgba(33, 35, 70, 0.8) 0%, rgba(83, 133, 169, 0.8) 100%);
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Стилі для заголовків форми */
+.profile-form .info-title {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Стилі для елементів форми */
+.profile-form .form-group {
+  margin-bottom: 20px;
+}
+
+.profile-form label {
+  font-weight: bold;
+  color: #150404;
+}
+
+.profile-form input[type="text"],
+.profile-form input[type="email"],
+.profile-form input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Стилі для кнопки оновлення */
+.profile-form .update-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.profile-form .update-btn:hover {
+  background-color: #0056b3;
+}

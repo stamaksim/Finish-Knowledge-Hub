@@ -1,0 +1,43 @@
+{% load static %}
+<div id="nav-bar">
+  <div class="nav-content">
+    <ul class="nav-menu">
+      <a href="{% url "knowhub-home" %}">
+        <img src={% static "icons/Knowhub.svg" %} alt="Knowhub" class="logo">
+      </a>
+
+      <button id="categories-button">Categories</button>
+      <div class="search-container">
+        <form action="{% url 'search-results' %}" method="GET">
+          <input type="text" placeholder="Search" name="query">
+        </form>
+      </div>
+      {% if not is_about_page %}
+        <li class="nav-menu__item"><a href="{% url 'knowhub-about' %}">About</a></li>
+      {% endif %}
+      {% if user.is_authenticated %}
+        <li class="nav-menu__item">
+          <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+          </form>
+        </li>
+        <li class="nav-menu__item"><a href="{% url 'profile' %}">Profile</a></li>
+      {% else %}
+        <li class="nav-menu__item"><a href="{% url 'login' %}">Log in</a></li>
+        <li class="nav-menu__item"><a href="{% url 'register' %}">Sign in</a></li>
+      {% endif %}
+    </ul>
+
+  </div>
+</div>
+<div id="nav-minibar">
+  <ul class="nav-mini">
+    <li class="nav-mini__item"><a href="{% url 'category-detail-slug' category_slug='finish-immigration-service' %}">Finnish
+      Immigration
+      Service</a></li>
+    <li class="nav-mini__item"><a href="{% url 'category-detail-slug' category_slug='kela' %}">Kela</a></li>
+    <li class="nav-mini__item"><a href="{% url 'category-detail-slug' category_slug='te-service' %}">TE services</a></li>
+    <li class="nav-mini__item"><a href="{% url "services-list" %}">Services</a></li>
+  </ul>
+</div>

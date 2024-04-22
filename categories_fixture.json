@@ -1,0 +1,14 @@
+[
+    {
+        "name": "finish-immigration-service",
+        "description": "All information about immigration service"
+    },
+    {
+        "name": "kela",
+        "description": "All information about social life"
+    },
+    {
+        "name": "te-service",
+        "description": "All information about work and adaptation"
+    }
+]

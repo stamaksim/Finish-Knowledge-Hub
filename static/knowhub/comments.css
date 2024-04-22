@@ -1,0 +1,145 @@
+
+
+textarea {
+    resize: none;
+  }
+
+  html{
+    background-image: url('https://img.freepik.com/free-vector/freeform-gradient-is-a-background-image-with-a-beautiful-color-combination-illustration_1258-49111.jpg');
+    background-repeat: no-repeat;
+    font-family: Roboto sans-serif;
+    background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  }
+  .comments-wrapper {
+    padding: 20px 20px 0 10px;
+}
+
+.comments-form {
+    display: flex;
+    flex-direction: column;
+
+
+}
+.comments-label {
+    font-size: 17px;
+    color: #2c2c2c;
+
+
+}
+.comments-area {
+    color: rgb(58, 58, 58);
+    font-weight: 500;
+    border-radius: 10px;
+    background-color: rgb(236, 246, 255);
+    width: 250px;
+    font-size: 17px;
+    padding: 5px;
+}
+
+.comments-btn {
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 25px;
+    border-radius: 10px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: white;
+    transition: .15s ease-in-out;
+    width: 150px;
+    font-size: 15px;
+    box-shadow: 0 0 40px 40px #a3b9d9 inset, 0 0 0 0 #a3b9d9;
+    color: white;
+
+}
+
+.comments-btn:hover,
+.comments-btn:focus{
+    cursor: pointer;
+    box-shadow: 0 0 10px 0 #a3b9d9 inset, 0 0 10px 4px #a3b9d9;
+    color: #a3b9d9;
+}
+.comments-title {
+    font-size: 25px;
+    color: #2c2c2c;
+}
+.comments-list {
+    list-style: none;
+
+
+}
+.comments-item {
+    border: 1px #2c2c2c solid;
+    border-radius: 10px;
+    padding: 15px;
+    width: 350px;
+    margin-bottom: 20px;
+
+}
+
+.comments-item:hover{
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
+}
+.comments-item-text {
+    font-size: 18px;
+    letter-spacing: 1.5px;
+    color: #2c2c2c;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+.wr{
+    display: flex;
+    gap: 12px;
+}
+.comments-item-author {
+    color:  black;
+    margin-bottom: 25px;
+    font-size: inherit;
+}
+.comments-item-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+.comments-item-date {
+    color:  rgb(88, 71, 71);
+    margin-bottom: 0;
+    font-size: small;
+}
+
+.btn-wrapper{
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+.edit-btn,
+.del-btn{
+    padding: 5px;
+    font-size: 15px;
+    border-radius: 10px;
+    width: 85px;
+    border: 1px solid rgb(130, 144, 238);
+    background-color: aliceblue;
+    color: #50779B;
+}
+
+.edit-btn:hover,
+.edit-btn:focus,
+.del-btn:hover,
+.del-btn:focus{
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
+    background-color: rgb(206, 218, 255);
+
+}
+
+#comment-form {
+  width: 20%; /
+  padding: 20px;
+  background-color: lightgray;
+  border-radius: 10px;
+}

@@ -1,0 +1,50 @@
+/* create_service.css */
+.content-section {
+    max-width: 600px;
+  margin: 60px auto;
+  padding: 20px;
+  background-color: #bfbfc9;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Стилізуємо заголовок форми */
+legend {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Стилізуємо поля вводу */
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Стилізуємо кнопку "Створити послугу" */
+button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Стилізуємо повідомлення про помилки */
+.error-message {
+  color: red;
+  font-size: 14px;
+}

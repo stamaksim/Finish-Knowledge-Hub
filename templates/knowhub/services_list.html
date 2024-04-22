@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <link rel="stylesheet" href="{% static "knowhub/service.css" %}">
+  <a href="{% url 'services-create' %}" class="btn btn-primary mt-3 service-custom">Create services</a>
+  <form method="get" action="" class="form">
+    <input type="text" name="title" placeholder="Search by Title" class="form-control"
+           value="{{ request.GET.title }}">
+    <input class="btn btn-secondary" type="submit" value="🔎">
+  </form>
+  {% if services_list %}
+    <div class="list-group">
+      {% for service in services_list %}
+        <a href="{% url 'services-detail' service.id %}" class="list-group-item list-group-item-action">
+          <h5 class="my-custom-class mb-1">{{ service.name }}</h5>
+          <small class="my-custom-class">{{ service.description }}</small>
+          <div class="my-custom-class">€{{ service.price }}</div>
+        </a>
+        <br>
+      {% endfor %}
+      <!-- pagination-->
+      <section class="pagination">
+        <div class="pagination__container container">
+          <ul class="pagination">
+            {% if page_obj.has_previous %}
+              <li class="page-item"><a class="page-link" href="?page=1">&laquo; First Page</a></li>
+              <li class="page-item"><a class="page-link"
+                                       href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+            {% endif %}
+            <li class="page-item"><span
+                class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
+            {% if page_obj.has_next %}
+              <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+              <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last
+                &raquo;</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </section>
+    </div>
+    <!-- end block pagination -->
+  {% else %}
+    <p>There are no services.</p>
+
+  {% endif %}
+{% endblock %}

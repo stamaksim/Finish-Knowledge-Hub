@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'knowhub/comments.css' %}">
+  </head>
+  <body>
+
+  <section class="comments-wrapper">
+
+    <h3 class="comments-title">All comments</h3>
+    <ul class="comments-list">
+      {% for comment in comments %}
+        <li class="comments-item">
+          <img class="comments-item-photo" src="{{ comment.author.profile.image.url }}"
+               alt="user-photo">
+          <h4 class="comments-item-author">{{ comment.author.username }}</h4>
+          <div class="wr">
+            <p class="comments-item-text">{{ comment.text }}</p>
+          </div>
+          <p class="comments-item-date">{{ comment.date }}</p>
+            {% if comment.author == request.user %}
+      <div class="btn-wrapper">
+        <a href="{% url 'comment-update' comment.pk %}">
+          <button class="edit-btn">Edit</button>
+        </a>
+        <form action="{% url 'comment-delete' comment.pk %}" method="post">
+          {% csrf_token %}
+          <button class="del-btn" type="submit">Delete</button>
+        </form>
+      </div>
+    {% endif %}
+        </li>
+{#        <div class="btn-wrapper">#}
+{#          <a href="{% url 'comment-update' comment.pk %}">#}
+{#            <button class="edit-btn">Edit</button>#}
+{#          </a>#}
+{#          <a href="{% url 'comment-delete' comment.pk %}">#}
+{#            <button class="del-btn">Delete</button>#}
+{#          </a>#}
+{#        </div>#}
+      {% empty %}
+        <p>No comments yet.</p>
+      {% endfor %}
+    </ul>
+    <form class="comments-form" method="post" action="{% url 'comment-create' pk=article.pk %}">
+      {% csrf_token %}
+      <button class="comments-btn">Send</button>
+      <div class="form-group" id="comment-form">
+        <label for="id_text" class="comments-label">Your review:</label><br>
+        {{ form.text }}
+      </div>
+    </form>
+  </section>
+
+  </body>
+  </html>
+{% endblock content %}

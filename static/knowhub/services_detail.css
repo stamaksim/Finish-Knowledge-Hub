@@ -1,0 +1,51 @@
+/* CSS стилі для основного контейнера статті */
+.article-wrapper {
+    margin-left: 38%;
+    margin-bottom: 20px;
+    margin-top: 60px;
+    padding: 5px;
+    /*border: 5px solid #ccc;*/
+    border-radius: 5px;
+    /*background-color: #f9f9f9;*/
+    width: 600px;
+    height: 200px;
+    text-align: center;
+}
+
+/* CSS стилі для фото користувача */
+.user-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+/* CSS стилі для імені користувача */
+.publ-user {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+    margin-top: 10px;
+}
+
+/* CSS стилі для кнопок "Update" та "Delete" */
+.custom-btn {
+    margin-right: 10px;
+}
+
+.custom-delete-btn {
+    margin-right: 10px;
+}
+
+/* CSS стилі для заголовка статті */
+.article-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #555;
+}
+
+/* CSS стилі для тексту статті */
+.article-text {
+    font-size: 16px;
+    color: #777;
+}

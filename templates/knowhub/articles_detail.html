@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Article Detail{% endblock title %}
+{% block content %}
+
+  <link rel="stylesheet" href="{% static "knowhub/aritcle_detail.css" %}">
+  <section class="article-wrapper">
+    <img class="user-photo"
+         src="{{ object.user.profile.image.url }}"
+         alt="user photo">
+    <p class="publ-user">{{ object.user }}</p>
+    <p class="publ-date">{{ object.creation_date|date:"F d, Y" }}</p>
+    {% if object.user == user %}
+      <div>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1 custom-btn" href="{% url 'article-update' object.id %}">Update
+          Article</a>
+        <a class="btn btn-danger btn-sm mt-1 mb-1 custom-delete-btn" href="{% url 'article-delete' object.id %}">Delete
+          Article</a>
+      </div>
+    {% endif %}
+    <h2 class="article-title">{{ object.name }}</h2>
+    <p class="article-text">{{ articles.text }}</p>
+    <a href="{% url 'all-comments' object.id %}" class="article-btn btn btn-primary">Comments</a>
+  </section>
+{% endblock content %}

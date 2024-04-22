@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+  <link rel="stylesheet" href="{% static "knowhub/services_detail.css" %}">
+  <section class="article-wrapper">
+    <img class="user-photo"
+         src="{{ object.owner.profile.image.url }}"
+         alt="user photo">
+    <p class="publ-user">{{ object.owner.username }}</p>
+
+    {% if object.owner == request.user %}
+      <div>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1 custom-btn" href="{% url 'services-update' object.id %}">Update
+          Service</a>
+        <a class="btn btn-danger btn-sm mt-1 mb-1 custom-delete-btn" href="{% url 'services-delete' object.id %}">Delete
+          Service</a>
+      </div>
+    {% endif %}
+    <h2 class="article-title">{{ object.description }}</h2>
+    <p class="article-text">Price: €{{ object.price }}</p>
+  </section>
+{% endblock content %}
